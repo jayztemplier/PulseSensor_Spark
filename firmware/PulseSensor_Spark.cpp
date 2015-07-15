@@ -120,7 +120,7 @@ void pulseISR(void) {
     digitalWrite(blinkPin,LOW);            // turn off pin 13 LED
     Pulse = false;                         // reset the Pulse flag so we can do it again
     amp2 = P2 - T2;                           // get amplitude of the pulse wave
-    thresh2 = amp2/2 + T;                    // set thresh at 50% of the amplitude
+    thresh2 = amp2/2 + T2;                    // set thresh at 50% of the amplitude
     P2 = thresh2;                            // reset these for next time
     T2 = thresh2;
   }
