@@ -5,19 +5,29 @@
 #include "SparkIntervalTimer.h"
 
 volatile int rate[10];                    // array to hold last ten IBI values
+volatile int rate2[10];                    // array to hold last ten IBI values
 volatile unsigned long sampleCounter = 0;          // used to determine pulse timing
 volatile unsigned long lastBeatTime = 0;           // used to find IBI
 volatile int P =2048;                      // used to find peak in pulse wave, seeded
+volatile int P2 =2048;                      // used to find peak in pulse wave, seeded
 volatile int T = 2048;                     // used to find trough in pulse wave, seeded
+volatile int T2 = 2048;                     // used to find trough in pulse wave, seeded
 volatile int thresh = 2048;                // used to find instant moment of heart beat, seeded
+volatile int thresh2 = 2048;                // used to find instant moment of heart beat, seeded
 volatile int amp = 410;                   // used to hold amplitude of pulse waveform, seeded
+volatile int amp2 = 410;                   // used to hold amplitude of pulse waveform, seeded
 volatile boolean firstBeat = true;        // used to seed rate array so we startup with reasonable BPM
 volatile boolean secondBeat = false;      // used to seed rate array so we startup with reasonable BPM
 
+volatile boolean firstBeat2 = true;        // used to seed rate array so we startup with reasonable BPM
+volatile boolean secondBeat2 = false;      // used to seed rate array so we startup with reasonable BPM
+
 // these variables are volatile because they are used during the interrupt service routine!
 volatile int BPM;                   // used to hold the pulse rate
+volatile int BPM2;                   // used to hold the pulse rate
 volatile int Signal;                // holds the incoming raw data
-volatile int IBI = 600;             // holds the time between beats, must be seeded! 
+volatile int Signal2;                // holds the incoming raw data
+volatile int IBI = 600;             // holds the time between beats, must be seeded!
 volatile boolean Pulse = false;     // true when pulse wave is high, false when it's low
 volatile boolean QS = false;        // becomes true when Arduoino finds a beat.
 
@@ -26,6 +36,7 @@ volatile boolean QS = false;        // becomes true when Arduoino finds a beat.
 // So use A2 (though A0 & A1 ADC should still work) for pulse input, D7 (onboard LED) for blink LED and D6 for fancy LED
 //  VARIABLES
 int pulsePin = A2;				// Pulse Sensor purple wire connected to analog pin 0
+int pulsePin2 = A3;				// Pulse Sensor purple wire connected to analog pin 0
 int blinkPin = D7;				// pin to blink led at each beat
 int fadePin = D6;				// pin to do fancy classy fading blink at each beat
 int fadeRate = 0;				// used to fade LED on with PWM on fadePin
@@ -38,7 +49,3 @@ void pulseISR(void);
 IntervalTimer pulseTimer;
 
 #endif
-
-
-
-
